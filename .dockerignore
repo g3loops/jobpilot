@@ -1,0 +1,14 @@
+# Keep the build context / image lean
+**/__pycache__/
+**/*.pyc
+**/.ipynb_checkpoints/
+.git/
+.env
+code/.env
+prompts/
+brief/
+data/techmap-jobs-dump-2021-09.json
+data/build_log.txt
+data/artifacts/
+*.md
+.DS_Store

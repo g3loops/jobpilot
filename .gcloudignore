@@ -1,0 +1,42 @@
+# Controls what `gcloud run deploy --source .` uploads to Cloud Build.
+# (gcloud uses THIS file, not .dockerignore, for the source upload. If absent it
+#  would fall back to .gitignore — which does NOT exclude the 47GB dump.)
+#
+# Keep ONLY what the Dockerfile COPYs:
+#   code/requirements.txt, code/jobpilot, code/server.py, code/web,
+#   data/jobs_snapshot.csv  (+ the Dockerfile itself)
+
+# --- the big one: 47GB Kaggle dump must never be uploaded ---
+data/techmap-jobs-dump-2021-09.json
+data/build_log.txt
+
+# NOTE: data/artifacts/ (the 75MB prebuilt embeddings) IS uploaded now — the Dockerfile
+# ships them into the image instead of regenerating them (faster, identical result).
+
+# Credentials — never upload
+.env
+code/.env
+code/.env.example
+
+# Old Streamlit reference app (not used by the FastAPI image)
+code/app.py
+code/.streamlit/
+code/build_index.py
+
+# Docs / deliverables not needed in the image
+prompts/
+brief/
+*.md
+SESSION_HANDOFF.md
+
+# Python / OS cruft
+**/__pycache__/
+**/*.pyc
+**/.ipynb_checkpoints/
+.git/
+.DS_Store
+**/.DS_Store
+.dockerignore
+.gitignore
+.claude/
+code/.claude/

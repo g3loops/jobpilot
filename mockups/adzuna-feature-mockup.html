@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JobPilot — Adzuna Live Fetch (mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ---- design tokens copied verbatim from web/style.css ---- */
+:root{
+  --bg:#f6f4ef; --panel:#fff; --border:#e9e4db; --text:#1d1c1a; --muted:#8c887f;
+  --accent:#e8612c; --accent-soft:#fdeee6; --good:#1f9d57; --bad:#d2483e; --chip:#f3efe8;
+  --shadow:0 1px 2px rgba(28,26,22,.04), 0 1px 8px rgba(28,26,22,.04);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+     font:14px/1.5 'Inter',-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+a{color:var(--accent);text-decoration:none}
+header{display:flex;align-items:center;justify-content:space-between;
+       padding:16px 26px;border-bottom:1px solid var(--border)}
+header h1{font-size:18px;margin:0;font-weight:700;letter-spacing:-.2px}
+header h1 .brand{color:var(--accent)}
+header h1 .sub{color:var(--muted);font-weight:400;font-size:12.5px;margin-left:10px}
+nav a{color:var(--muted);margin-left:22px;font-size:13.5px;font-weight:500;padding-bottom:5px;cursor:pointer}
+nav a.active{color:var(--text);border-bottom:2px solid var(--accent)}
+main{display:grid;grid-template-columns:330px 1fr;gap:18px;padding:18px 26px;align-items:start}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+h2{font-size:11.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 14px;font-weight:600}
+label{display:block;font-size:12.5px;color:var(--muted);margin:13px 0 5px;font-weight:500}
+input,select{width:100%;background:#fff;border:1px solid var(--border);color:var(--text);
+     border-radius:8px;padding:9px 10px;font-size:13px;font-family:inherit}
+button{background:var(--accent);color:#fff;border:0;border-radius:8px;
+       padding:10px 14px;font-weight:600;cursor:pointer;font-size:13px;font-family:inherit}
+button:hover{filter:brightness(.96)}
+button.ghost{background:#fff;border:1px solid var(--border);color:var(--text)}
+.row{display:flex;gap:8px;align-items:center}
+.muted{color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:var(--chip);border:1px solid var(--border);border-radius:6px;
+      padding:4px 9px;font-size:12px;color:var(--text);font-weight:500;display:inline-flex;gap:6px;align-items:center}
+.chip .x{color:var(--accent);cursor:pointer;font-weight:700;line-height:1}
+.chip-add{border:1px dashed var(--border);border-radius:6px;padding:0;display:inline-flex;align-items:center}
+.chip-add input{border:0;background:transparent;width:78px;padding:4px 8px;font-size:12px}
+.download-bar{display:flex;justify-content:space-between;align-items:center;
+              background:var(--panel);border:1px solid var(--border);border-radius:14px;
+              padding:13px 16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.download-bar span{color:var(--muted);font-size:12.5px}
+.download-bar b{color:var(--text)}
+.gen{background:#fff;color:var(--accent);border:1px solid #f3cdb9;padding:7px 11px}
+.job{border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:12px;
+     background:var(--panel);box-shadow:var(--shadow)}
+.job .top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.job h3{margin:0;font-size:15.5px;font-weight:600;letter-spacing:-.1px}
+.job .meta{color:var(--muted);font-size:12.5px;margin-top:4px}
+.score{font-weight:700;color:var(--good);font-size:16px;white-space:nowrap}
+.explain{margin-top:11px;color:var(--muted);font-size:12.5px;border-top:1px dashed var(--border);padding-top:9px}
+.explain b{color:var(--text);font-weight:600}
+.actions{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap}
+.actions button{padding:7px 12px;font-size:12.5px;font-weight:500}
+.accept{background:var(--good)}
+.skip{background:#fff;color:var(--muted);border:1px solid var(--border)}
+.reject{background:var(--bad)}
+.gendoc{background:#fff;color:var(--accent);border:1px solid #f3cdb9}
+footer{padding:16px 26px;color:var(--muted);font-size:11.5px;text-align:center;border-top:1px solid var(--border)}
+
+/* =====================================================================
+   NEW components for the Adzuna live-fetch feature (mockup styles)
+   ===================================================================== */
+
+/* "Live data" card sits at the top of the left profile column */
+/* left column: profile first, live-data card below it */
+.leftcol{display:flex;flex-direction:column}
+.leftcol .panel{order:1}
+.leftcol .live-card{order:2;margin-top:18px}
+.live-card{border:1px solid #f3cdb9;background:linear-gradient(180deg,#fff,#fffaf7);
+           border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+.live-card .hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.live-card .hd h2{margin:0}
+.live-dot{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--good)}
+.live-dot i{width:7px;height:7px;border-radius:50%;background:var(--good);display:inline-block;
+            box-shadow:0 0 0 3px rgba(31,157,87,.15)}
+
+/* single ghost refresh button — no fill, refresh icon + "Adzuna" */
+.adz-sub{font-size:11.5px;color:var(--muted);margin:8px 0 0}
+.btn-adz{display:inline-flex;align-items:center;gap:7px;margin-top:10px;
+         background:#fff;color:var(--accent);border:1px solid #f3cdb9;font-weight:600}
+.btn-adz:hover{background:var(--accent-soft);filter:none}
+.btn-adz .ic{font-size:14px;line-height:1}
+
+/* merged status line (post-fetch) */
+.merge-status{margin-top:12px;background:#f1faf4;border:1px solid #cdeed9;border-radius:10px;
+              padding:9px 11px;font-size:12px;color:#176a3c;display:flex;align-items:center;gap:8px}
+.merge-status b{color:#0f5a30}
+.spinner{width:13px;height:13px;border:2px solid #f3cdb9;border-top-color:var(--accent);
+         border-radius:50%;display:inline-block}
+
+/* LIVE badge on Adzuna-sourced job cards */
+.src-badge{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;
+           letter-spacing:.3px;padding:2px 8px;border-radius:20px;vertical-align:middle;margin-left:8px}
+.src-live{background:var(--accent-soft);color:var(--accent);border:1px solid #f3cdb9}
+.src-live i{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block}
+.job.is-live{border-color:#f3cdb9;box-shadow:0 1px 2px rgba(232,97,44,.06),0 1px 10px rgba(232,97,44,.07)}
+.count-pill{display:inline-flex;align-items:center;gap:6px;background:var(--accent-soft);
+            color:var(--accent);border:1px solid #f3cdb9;border-radius:20px;padding:3px 10px;
+            font-size:11.5px;font-weight:600;margin-left:8px}
+.note{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Job<span class="brand">Pilot</span> <span class="sub">BAX-423 · Smart Job Searcher</span></h1>
+  <nav id="nav">
+    <a class="active">Matches</a><a>Analytics</a><a>Feedback log</a><a>About</a>
+  </nav>
+</header>
+
+<main>
+  <!-- LEFT column -->
+  <div class="leftcol">
+    <!-- ===== NEW: Live data source card (the knob + refresh + add) ===== -->
+    <div class="live-card">
+      <div class="hd">
+        <h2>Live data source</h2>
+        <span class="live-dot"><i></i>ADZUNA API</span>
+      </div>
+
+      <!-- Adzuna jobs are included by default; this single button just refreshes them -->
+      <div class="adz-sub">Fresh postings included by default — refresh to pull the latest.</div>
+      <button class="btn-adz"><span class="ic">↻</span> Adzuna</button>
+
+      <!-- merged status -->
+      <div class="merge-status">
+        ✓ <b>248</b> live Adzuna jobs fetched, deduped &amp; embedded — merged just now.
+      </div>
+      <div class="note">Adzuna API → 12-field schema → Bloom-dedup → MiniLM embed → live index.
+        Corpus is now <b>50,550</b>.</div>
+    </div>
+
+    <!-- existing profile panel (unchanged) -->
+    <aside class="panel">
+      <h2>Your profile</h2>
+      <label>Quick-load a test persona</label>
+      <select><option>Gayathri (You · Financial Analyst)</option></select>
+      <label>Target roles</label>
+      <div class="chips">
+        <span class="chip">Financial Analyst <span class="x">×</span></span>
+        <span class="chip">Data Analyst <span class="x">×</span></span>
+        <span class="chip-add"><input placeholder="+ add"></span>
+      </div>
+      <label>Must-have skills</label>
+      <div class="chips">
+        <span class="chip">sql <span class="x">×</span></span>
+        <span class="chip">python <span class="x">×</span></span>
+        <span class="chip">tableau <span class="x">×</span></span>
+        <span class="chip-add"><input placeholder="+ add"></span>
+      </div>
+      <label>Min salary (USD)</label>
+      <input type="number" value="90000">
+      <label>Location</label>
+      <div class="chips">
+        <span class="chip">california <span class="x">×</span></span>
+        <span class="chip">remote <span class="x">×</span></span>
+        <span class="chip-add"><input placeholder="+ add"></span>
+      </div>
+      <div class="row" style="margin-top:16px">
+        <button style="flex:1">Find matches</button>
+        <button class="ghost">Reset</button>
+      </div>
+      <div class="muted" style="margin-top:10px;font-size:11.5px">Corpus: 50,550 job postings <span class="count-pill">＋248 live</span></div>
+    </aside>
+  </div>
+
+  <!-- RIGHT column: matches -->
+  <section>
+    <div class="download-bar">
+      <span>Showing top <b>10</b> of <b>29</b></span>
+      <div class="row">
+        <button class="gen">⬇ CSV</button><button class="gen">⬇ Excel</button><button class="gen">⬇ JSON</button>
+      </div>
+    </div>
+    <div class="muted" style="font-size:12px;margin-bottom:12px">Ranking quality — Precision@10 0.90 · NDCG@10 0.962</div>
+
+    <!-- an Adzuna-sourced card (no per-card badge — Kaggle + Adzuna are unified) -->
+    <article class="job">
+      <div class="top"><div>
+        <h3>1. Senior Financial Analyst, FP&amp;A</h3>
+        <div class="meta">Stripe · San Francisco, CA · $128k–$152k · <a>link</a></div>
+      </div><div class="score">0.78</div></div>
+      <div class="explain"><b>Why this rank →</b> matched skills <b>sql, python, excel</b> (3/6) · title <b style="color:var(--good)">✓</b> · salary <b style="color:var(--good)">meets min ✓</b> · cosine sim <b>0.71</b></div>
+      <div class="actions">
+        <button class="accept">✓ Accept</button><button class="skip">↷ Skip</button>
+        <button class="reject">✕ Reject</button><button class="gendoc">Generate Resume</button>
+        <button class="gendoc">Generate Cover Letter</button>
+      </div>
+    </article>
+
+    <!-- a corpus card -->
+    <article class="job">
+      <div class="top"><div>
+        <h3>2. BI Analyst with Strong SQL</h3>
+        <div class="meta">Acme Analytics · San Jose, CA · salary N/A</div>
+      </div><div class="score">0.73</div></div>
+      <div class="explain"><b>Why this rank →</b> matched skills <b>sql, tableau</b> (2/6) · title <b style="color:var(--good)">✓</b> · cosine sim <b>0.69</b></div>
+      <div class="actions">
+        <button class="accept">✓ Accept</button><button class="skip">↷ Skip</button>
+        <button class="reject">✕ Reject</button><button class="gendoc">Generate Resume</button>
+        <button class="gendoc">Generate Cover Letter</button>
+      </div>
+    </article>
+
+    <!-- another Adzuna-sourced card (no badge) -->
+    <article class="job">
+      <div class="top"><div>
+        <h3>3. Data Analyst — Business Insights</h3>
+        <div class="meta">Notion · Remote (US) · $96k–$118k · <a>link</a></div>
+      </div><div class="score">0.69</div></div>
+      <div class="explain"><b>Why this rank →</b> matched skills <b>sql, python</b> (2/6) · salary <b style="color:var(--good)">meets min ✓</b> · cosine sim <b>0.66</b></div>
+      <div class="actions">
+        <button class="accept">✓ Accept</button><button class="skip">↷ Skip</button>
+        <button class="reject">✕ Reject</button><button class="gendoc">Generate Resume</button>
+        <button class="gendoc">Generate Cover Letter</button>
+      </div>
+    </article>
+  </section>
+</main>
+
+<footer>Hosted on Google Cloud Run + Pub/Sub · 50,550 active postings (248 live Adzuna) · BAX-423 Spring 2026</footer>
+
+</body>
+</html>

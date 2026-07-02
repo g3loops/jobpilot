@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JobPilot — Analytics (mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef; --panel:#fff; --border:#e9e4db; --text:#1d1c1a; --muted:#8c887f;
+  --accent:#e8612c; --accent-soft:#fdeee6; --good:#1f9d57; --bad:#d2483e; --chip:#f3efe8;
+  --accent-2:#f3b49a;   /* lighter orange for the secondary pie slice */
+  --shadow:0 1px 2px rgba(28,26,22,.04), 0 1px 8px rgba(28,26,22,.04);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+     font:14px/1.5 'Inter',-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+header{display:flex;align-items:center;justify-content:space-between;
+       padding:16px 26px;border-bottom:1px solid var(--border)}
+header h1{font-size:18px;margin:0;font-weight:700;letter-spacing:-.2px}
+header h1 .brand{color:var(--accent)}
+header h1 .sub{color:var(--muted);font-weight:400;font-size:12.5px;margin-left:10px}
+nav a{color:var(--muted);margin-left:22px;font-size:13.5px;font-weight:500;padding-bottom:5px;cursor:pointer}
+nav a.active{color:var(--text);border-bottom:2px solid var(--accent)}
+footer{padding:16px 26px;color:var(--muted);font-size:11.5px;text-align:center;border-top:1px solid var(--border)}
+.wrap{padding:18px 26px}
+.h2{font-size:11.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 14px;font-weight:600}
+
+/* stat strip */
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:11px 16px;box-shadow:var(--shadow)}
+.stat .n{font-size:20px;font-weight:700}
+.stat .l{font-size:11.5px;color:var(--muted)}
+
+/* 2x2 chart grid */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
+.card h3{font-size:14px;font-weight:700;color:var(--text);margin:0 0 14px}
+
+/* horizontal bar charts */
+.hbars{display:flex;flex-direction:column;gap:5px}
+.hrow{display:flex;align-items:center;gap:9px;font-size:11px}
+.hrow .lbl{width:150px;text-align:right;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hrow .track{flex:1}
+.hrow .bar{height:13px;background:var(--accent);border-radius:2px}
+.axis{display:flex;justify-content:space-between;margin:8px 0 0 159px;font-size:10px;color:var(--muted)}
+.axiscap{text-align:center;font-size:10.5px;color:var(--muted);margin-top:3px}
+
+/* histogram */
+.hist{display:flex;align-items:flex-end;gap:2px;height:190px;border-left:1px solid var(--border);
+      border-bottom:1px solid var(--border);padding-left:4px}
+.bin{flex:1;background:var(--accent)}
+.histx{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin:5px 4px 0 4px}
+
+/* pie */
+.pierow{display:flex;align-items:center;gap:26px;justify-content:center;padding:6px 0}
+.pie{width:200px;height:200px;border-radius:50%;position:relative;
+     background:conic-gradient(var(--accent) 0 95.3%, var(--accent-2) 95.3% 100%)}
+.pie .big{position:absolute;left:46%;top:62%;transform:translate(-50%,-50%);color:#fff;font-size:13px;font-weight:700}
+.pie .small{position:absolute;left:60%;top:8%;color:#7a4a36;font-size:11px;font-weight:600}
+.legend{font-size:12.5px}
+.legend div{display:flex;align-items:center;gap:8px;margin:6px 0}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Job<span class="brand">Pilot</span> <span class="sub">BAX-423 · Smart Job Searcher</span></h1>
+  <nav><a>Matches</a><a class="active">Analytics</a><a>Feedback log</a><a>About</a></nav>
+</header>
+
+<div class="wrap">
+  <h2 class="h2">Analytics · job-market insights (50k corpus + live Adzuna)</h2>
+
+  <div class="stats">
+    <div class="stat"><div class="n">50,550</div><div class="l">Total postings</div></div>
+    <div class="stat"><div class="n">18,420</div><div class="l">Companies</div></div>
+    <div class="stat"><div class="n">$118,500</div><div class="l">Median salary</div></div>
+    <div class="stat"><div class="n">12%</div><div class="l">with salary</div></div>
+  </div>
+
+  <div class="grid">
+
+    <!-- Top skills in demand -->
+    <div class="card">
+      <h3>Top skills in demand</h3>
+      <div class="hbars">
+        <div class="hrow"><span class="lbl">excel</span><span class="track"><div class="bar" style="width:96%"></div></span></div>
+        <div class="hrow"><span class="lbl">data analysis</span><span class="track"><div class="bar" style="width:60%"></div></span></div>
+        <div class="hrow"><span class="lbl">sql</span><span class="track"><div class="bar" style="width:35%"></div></span></div>
+        <div class="hrow"><span class="lbl">r</span><span class="track"><div class="bar" style="width:27%"></div></span></div>
+        <div class="hrow"><span class="lbl">python</span><span class="track"><div class="bar" style="width:24%"></div></span></div>
+        <div class="hrow"><span class="lbl">machine learning</span><span class="track"><div class="bar" style="width:22%"></div></span></div>
+        <div class="hrow"><span class="lbl">aws</span><span class="track"><div class="bar" style="width:22%"></div></span></div>
+        <div class="hrow"><span class="lbl">java</span><span class="track"><div class="bar" style="width:21%"></div></span></div>
+        <div class="hrow"><span class="lbl">statistics</span><span class="track"><div class="bar" style="width:20%"></div></span></div>
+        <div class="hrow"><span class="lbl">azure</span><span class="track"><div class="bar" style="width:18%"></div></span></div>
+        <div class="hrow"><span class="lbl">kubernetes</span><span class="track"><div class="bar" style="width:8%"></div></span></div>
+        <div class="hrow"><span class="lbl">docker</span><span class="track"><div class="bar" style="width:7.5%"></div></span></div>
+        <div class="hrow"><span class="lbl">etl</span><span class="track"><div class="bar" style="width:7%"></div></span></div>
+        <div class="hrow"><span class="lbl">power bi</span><span class="track"><div class="bar" style="width:7%"></div></span></div>
+        <div class="hrow"><span class="lbl">microservices</span><span class="track"><div class="bar" style="width:6.5%"></div></span></div>
+      </div>
+      <div class="axis"><span>0</span><span>2000</span><span>4000</span></div>
+      <div class="axiscap">count</div>
+    </div>
+
+    <!-- Salary distribution -->
+    <div class="card">
+      <h3>Salary distribution (where listed)</h3>
+      <div class="hist">
+        <div class="bin" style="height:3%"></div><div class="bin" style="height:8%"></div>
+        <div class="bin" style="height:27%"></div><div class="bin" style="height:100%"></div>
+        <div class="bin" style="height:59%"></div><div class="bin" style="height:38%"></div>
+        <div class="bin" style="height:33%"></div><div class="bin" style="height:30%"></div>
+        <div class="bin" style="height:26%"></div><div class="bin" style="height:22%"></div>
+        <div class="bin" style="height:18%"></div><div class="bin" style="height:15%"></div>
+        <div class="bin" style="height:12%"></div><div class="bin" style="height:10%"></div>
+        <div class="bin" style="height:8%"></div><div class="bin" style="height:6%"></div>
+        <div class="bin" style="height:5%"></div><div class="bin" style="height:4%"></div>
+        <div class="bin" style="height:3%"></div><div class="bin" style="height:2%"></div>
+      </div>
+      <div class="histx"><span>50k</span><span>100k</span><span>200k</span><span>300k</span><span>400k</span></div>
+      <div class="axiscap">salary</div>
+    </div>
+
+    <!-- Demand by location -->
+    <div class="card">
+      <h3>Demand by location</h3>
+      <div class="hbars">
+        <div class="hrow"><span class="lbl">Unknown</span><span class="track"><div class="bar" style="width:97%"></div></span></div>
+        <div class="hrow"><span class="lbl">New York, NY</span><span class="track"><div class="bar" style="width:13%"></div></span></div>
+        <div class="hrow"><span class="lbl">London, South East England</span><span class="track"><div class="bar" style="width:11%"></div></span></div>
+        <div class="hrow"><span class="lbl">London</span><span class="track"><div class="bar" style="width:10%"></div></span></div>
+        <div class="hrow"><span class="lbl">Singapore</span><span class="track"><div class="bar" style="width:9%"></div></span></div>
+        <div class="hrow"><span class="lbl">Remote</span><span class="track"><div class="bar" style="width:5%"></div></span></div>
+        <div class="hrow"><span class="lbl">India</span><span class="track"><div class="bar" style="width:3.5%"></div></span></div>
+        <div class="hrow"><span class="lbl">London, London</span><span class="track"><div class="bar" style="width:3%"></div></span></div>
+        <div class="hrow"><span class="lbl">Bengaluru / Bangalore, India</span><span class="track"><div class="bar" style="width:2.8%"></div></span></div>
+        <div class="hrow"><span class="lbl">Manchester, Greater Manchester</span><span class="track"><div class="bar" style="width:2.5%"></div></span></div>
+        <div class="hrow"><span class="lbl">Chicago, IL</span><span class="track"><div class="bar" style="width:2%"></div></span></div>
+        <div class="hrow"><span class="lbl">Atlanta, GA</span><span class="track"><div class="bar" style="width:1.8%"></div></span></div>
+      </div>
+      <div class="axis"><span>0</span><span>5k</span><span>10k</span></div>
+      <div class="axiscap">count</div>
+    </div>
+
+    <!-- Data source mix -->
+    <div class="card">
+      <h3>Data source mix</h3>
+      <div class="pierow">
+        <div class="pie"><span class="big">95.3%</span><span class="small">4.66%</span></div>
+        <div class="legend">
+          <div><i style="background:var(--accent)"></i> Kaggle</div>
+          <div><i style="background:var(--accent-2)"></i> Adzuna (live)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>Hosted on Google Cloud Run + Pub/Sub · 50,550 active postings (Kaggle + live Adzuna) · BAX-423 Spring 2026</footer>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JobPilot — Smart Job Searcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+</head>
+<body>
+
+<header>
+  <h1>Job<span class="brand">Pilot</span> <span class="sub">BAX-423 · Smart Job Searcher</span></h1>
+  <nav id="nav">
+    <a data-tab="matches" class="active">Matches</a>
+    <a data-tab="analytics">Analytics</a>
+    <a data-tab="feedback">Feedback log</a>
+    <a data-tab="about">About</a>
+  </nav>
+</header>
+
+<main>
+  <!-- LEFT column: profile + live data source -->
+  <div class="leftcol">
+  <aside class="panel" id="profilePanel">
+    <h2>Your profile</h2>
+
+    <div class="upload" id="upload">⬆︎ Drop résumé PDF<br><span>or click to browse</span>
+      <input type="file" id="pdf" accept="application/pdf" hidden></div>
+    <div class="muted" id="pdfStatus" style="font-size:11.5px;margin-top:4px"></div>
+
+    <label>Quick-load a test persona</label>
+    <select id="persona"><option value="">— none —</option></select>
+
+    <label>Target roles</label>
+    <div class="chips" id="rolesChips"></div>
+
+    <label>Must-have skills</label>
+    <div class="chips" id="skillsChips"></div>
+
+    <label>Min salary (USD)</label>
+    <input type="number" id="salary" value="90000" step="5000">
+
+    <label>Location</label>
+    <div class="chips" id="locationsChips"></div>
+
+    <label>Dealbreakers</label>
+    <div class="chips" id="dealbreakersChips"></div>
+
+    <div class="row" style="margin-top:16px">
+      <button id="find" style="flex:1">Find matches</button>
+      <button class="ghost" id="reset">Reset</button>
+    </div>
+    <div class="muted" id="corpusInfo" style="margin-top:10px;font-size:11.5px"></div>
+  </aside>
+
+  <!-- Live data source (below the profile) -->
+  <aside class="panel live-card" id="liveCard">
+    <div class="live-hd"><h2 style="margin:0">Live data source</h2><span class="live-dot"><i></i>ADZUNA</span></div>
+    <div class="muted" style="font-size:11.5px;margin-top:4px">Fresh Adzuna postings are included by default — refresh to pull the latest.</div>
+    <button class="adz-btn" id="adzBtn">↻ Adzuna</button>
+    <div class="muted" id="adzStatus" style="font-size:11.5px;margin-top:9px"></div>
+  </aside>
+  </div>
+
+  <!-- RIGHT: tab content -->
+  <section id="content">
+    <div class="view" id="view-matches">
+      <div class="download-bar">
+        <span id="countLine">Pick a persona or fill your profile, then <b>Find matches</b>.</span>
+        <div class="row">
+          <button class="gen" data-fmt="csv">⬇ CSV</button>
+          <button class="gen" data-fmt="excel">⬇ Excel</button>
+          <button class="gen" data-fmt="json">⬇ JSON</button>
+        </div>
+      </div>
+      <div class="muted" id="metricLine" style="font-size:12px;margin-bottom:12px"></div>
+      <div id="jobs"></div>
+    </div>
+
+    <div class="view" id="view-analytics" style="display:none"><div id="analytics" class="spin">…</div></div>
+    <div class="view" id="view-feedback" style="display:none"><div id="feedback"></div></div>
+    <div class="view" id="view-about" style="display:none"><div id="about"></div></div>
+  </section>
+</main>
+
+<footer>Hosted on Google Cloud Run + Pub/Sub · <span id="footCorpus">…</span> · BAX-423 Spring 2026</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>
